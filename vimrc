@@ -23,7 +23,7 @@ autocmd VimEnter * let w:created=1
 autocmd WinEnter * if !exists('w:created') | let w:m1=matchadd('ErrorMsg', '\s\+$') | endif
 " autocmd WinEnter * if !exists('w:created') | let w:m2= matchadd('ErrorMsg', '\%>80v.\+') | endif
 
-autocmd FileType python,html,htmldjango,java :setlocal sw=4 ts=4 sts=4
+autocmd FileType python,java :setlocal sw=4 ts=4 sts=4
 
 map ; :NERDTreeToggle<CR><CR>
 
