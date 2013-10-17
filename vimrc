@@ -10,6 +10,12 @@ au BufNewFile,BufRead *.ejs set filetype=html
 set splitbelow
 set splitright
 
+" filetype on
+" filetype plugin on
+" filetype indent on
+
+" command IndentOn * filetype on * filetype plugin on * filetype indent on
+
 highlight ErrorMsg ctermbg=red guibg=red
 call matchadd('ErrorMsg', '\s\+$')
 " call matchadd('ErrorMsg', '/\%80v.\+/')
@@ -25,6 +31,6 @@ autocmd WinEnter * if !exists('w:created') | let w:m1=matchadd('ErrorMsg', '\s\+
 
 autocmd FileType python,java :setlocal sw=4 ts=4 sts=4
 
-map ; :NERDTreeToggle<CR><CR>
+nnoremap <leader>d :NERDTreeToggle<CR>
 
 call pathogen#infect()
