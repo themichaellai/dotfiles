@@ -1,0 +1,4 @@
+*.swp
+*.orig
+venv
+.DS_Store

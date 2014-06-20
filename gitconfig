@@ -1,0 +1,17 @@
+[user]
+	email = themichaellai@gmail.com
+	name = Michael Lai
+[core]
+	editor = vim
+	excludesfile = /Users/michael/.gitignore_global
+[color]
+  ui = true
+[merge]
+	tool = vimdiff
+[log]
+  decorate = true
+	abbrevCommit = true
+[push]
+	default = tracking
+[alias]
+  s = status -sb
