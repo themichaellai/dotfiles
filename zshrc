@@ -33,7 +33,8 @@ ZSH_THEME="pure"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails gem npm rsync bower grunt zsh-syntax-highlighting tmux vagrant)
+alias git='/usr/local/bin/git'
+plugins=(git rails gem npm rsync bower grunt zsh-syntax-highlighting tmux vagrant sublime)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -45,7 +46,13 @@ HIST_IGNORE_SPACE="true"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+export PATH="/Users/michael/bin:$PATH"
+
+export PATH="/usr/texbin:$PATH"
+
 export PATH="$HOME/opt/android/tools:$HOME/opt/android/platform-tools:$PATH"
+
+export GOPATH="$HOME/bin/go"
 
 #export NVM_DIR=""
 [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
@@ -55,16 +62,14 @@ alias myip="curl -s ip\.nu | egrep --color=no -o '[0-9\.]+'"
 
 alias todo="cat /home/michael/todo"
 
-PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-
 alias ls="ls -F"
 
 alias clipboard='xclip -sel clip'
 
+alias slack-post='/Users/michael/programming/slack-post/venv/bin/python /Users/michael/programming/slack-post/slack-post.py'
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/local/bin/vim
 export VISUAL=/usr/bin/vim
 
 bindkey -v
@@ -75,3 +80,6 @@ function trim_whitespace {
 }
 
 PURE_GIT_PULL=0
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting

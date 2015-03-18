@@ -1,6 +1,4 @@
 call pathogen#infect()
-set autoindent
-set smartindent
 set nu
 syntax on
 set tabstop=2
@@ -14,6 +12,8 @@ set splitbelow
 set splitright
 set nofoldenable
 set backspace=indent,eol,start
+
+set noesckeys
 
 filetype on
 filetype plugin on
