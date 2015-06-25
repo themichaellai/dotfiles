@@ -15,3 +15,5 @@
 	default = tracking
 [alias]
   s = status -sb
+[url "git@github.com:"]
+	insteadOf = https://github.com/

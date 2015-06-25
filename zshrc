@@ -34,6 +34,7 @@ ZSH_THEME="pure"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 alias git='/usr/local/bin/git'
+alias gbst='git for-each-ref --sort=-committerdate refs/ --format='"'"'%(objectname:short) %(committerdate:short) %(authorname) %(refname:short)'"'"''
 plugins=(git rails gem npm rsync bower grunt zsh-syntax-highlighting tmux vagrant sublime)
 
 source $ZSH/oh-my-zsh.sh
