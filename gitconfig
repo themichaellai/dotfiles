@@ -15,5 +15,6 @@
 	default = tracking
 [alias]
   s = status -sb
+  diff-nl = diff --word-diff-regex=[^[:space:]]
 [url "git@github.com:"]
 	insteadOf = https://github.com/
