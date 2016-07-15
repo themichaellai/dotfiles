@@ -16,5 +16,6 @@
 [alias]
   s = status -sb
   diff-nl = diff --word-diff-regex=[^[:space:]]
+  diff-day = diff 'HEAD@{1 day ago}' HEAD
 [url "git@github.com:"]
 	insteadOf = https://github.com/
