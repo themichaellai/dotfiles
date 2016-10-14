@@ -17,5 +17,7 @@
   s = status -sb
   diff-nl = diff --word-diff-regex=[^[:space:]]
   diff-day = diff 'HEAD@{1 day ago}' HEAD
+  diff-full-context = diff --no-prefix -U100
+  curr-branch = rev-parse --abbrev-ref HEAD
 [url "git@github.com:"]
 	insteadOf = https://github.com/
