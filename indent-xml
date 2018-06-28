@@ -1,0 +1,8 @@
+#!/usr/local/bin/python
+
+from lxml import etree
+import sys
+
+if __name__ == '__main__':
+    f = etree.fromstring(sys.stdin.read())
+    print etree.tostring(f, pretty_print=True)

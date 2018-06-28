@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+from collections import OrderedDict
+import json
+import sys
+
+if __name__ == '__main__':
+    unparsed = sys.stdin.read()
+    sort_keys = any(arg in ('--sort-keys', '--sort') for arg in sys.argv[1:])
+    if sort_keys:
+        parsed = json.loads(unparsed)
+    else:
+        parsed = json.loads(unparsed, object_pairs_hook=OrderedDict)
+
+    print json.dumps(parsed,
+                     indent=2,
+                     separators=(',', ': '),
+                     sort_keys=sort_keys)
