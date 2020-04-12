@@ -2,7 +2,7 @@
 	email = themichaellai@gmail.com
 	name = Michael Lai
 [core]
-  editor = vim
+  editor = nvim
 	excludesfile = /Users/michael/.gitignore_global
 [color]
   ui = true
