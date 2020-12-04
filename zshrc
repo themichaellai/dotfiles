@@ -64,6 +64,7 @@ alias myip="curl -s ip\.nu | egrep --color=no -o '[0-9\.]+'"
 alias todo="cat /home/michael/todo"
 
 alias ls="ls -F"
+alias ts="ts '[%Y-%m-%d %H:%M:%.S]'"
 
 alias clipboard='xclip -sel clip'
 
@@ -84,3 +85,7 @@ PURE_GIT_PULL=0
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+alias date-iso='date +"%Y-%m-%dT%H:%M:%SZ"'
+
+alias vim=/usr/local/bin/nvim
+

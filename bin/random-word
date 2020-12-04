@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import random
+import sys
+
+def suitable(word):
+    return word.lower() == word
+
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        num_words = 3
+    else:
+        try:
+            num_words = int(sys.argv[1])
+        except Exception as e:
+            num_words = 3
+
+    with open('/usr/share/dict/words', 'r') as f:
+        words = f.read().split('\n')
+
+    suitable_words = filter(suitable, words)
+
+    sample = random.sample(list(suitable_words), num_words)
+    sys.stdout.write('-'.join([w.lower() for w in sample]))

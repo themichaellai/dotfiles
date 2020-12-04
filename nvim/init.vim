@@ -36,6 +36,7 @@ set backspace=indent,eol,start
 set guicursor=
 set noincsearch
 set number relativenumber
+set guicursor=
 
 colorscheme tomorrow-night-eighties
 
@@ -80,8 +81,10 @@ let NERDTreeQuitOnOpen=1
 
 autocmd FileType typescript nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
 autocmd FileType typescript nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+autocmd FileType typescript.tsx nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
+autocmd FileType typescript.tsx nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 autocmd FileType javascript nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-autocmd FileType javascript set cino+=(0
+" autocmd FileType javascript set cino+=(0
 autocmd FileType typescript set cino+=(0
 let g:tsuquyomi_javascript_support = 1
 autocmd FileType go nmap <Leader><Leader>t <Plug>(go-info)
@@ -104,3 +107,8 @@ set hidden
 " nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 "
 " LanguageClient config end
+
+" https://vi.stackexchange.com/questions/3848/how-to-get-the-current-byte-offset-in-whole-file/3850
+function! FileOffset()
+    return line2byte(line('.')) + col('.') - 1
+endfunction
