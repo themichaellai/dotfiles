@@ -20,7 +20,8 @@
   diff-day = diff 'HEAD@{1 day ago}' HEAD
   diff-full-context = diff --no-prefix -U100
   diff-nl = diff --word-diff-regex=[^[:space:]]
-  merge-base-with-curr = "!f() { git merge-base `git rev-parse --abbrev-ref HEAD` \"$@\"; }; f"
+  merge-base-with-curr = "!f() { git merge-base `git rev-parse --abbrev-ref HEAD` \"$@\" | tr -d '\n'; }; f"
+  merge-base-main = "!f() { git merge-base `git rev-parse --abbrev-ref HEAD` origin/main | tr -d '\n'; }; f"
   s = status -sb
 [url "git@github.com:"]
 	insteadOf = https://github.com/
