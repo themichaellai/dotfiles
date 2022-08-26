@@ -6,7 +6,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'mattn/emmet-vim'
 Plug 'git@github.com:Quramy/tsuquyomi.git'
-" Plug 'git@github.com:Vimjas/vim-python-pep8-indent.git'
+Plug 'git@github.com:Vimjas/vim-python-pep8-indent.git'
 Plug 'git@github.com:airblade/vim-gitgutter.git'
 Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
 Plug 'git@github.com:easymotion/vim-easymotion.git'
@@ -20,6 +20,9 @@ Plug 'git@github.com:pangloss/vim-javascript.git'
 Plug 'git@github.com:scrooloose/nerdtree.git'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'elixir-editors/vim-elixir'
+Plug 'tpope/vim-fugitive'
+Plug 'github/copilot.vim'
+Plug 'simnalamburt/vim-mundo'
 call plug#end()
 
 set nu
@@ -37,6 +40,7 @@ set guicursor=
 set noincsearch
 set number relativenumber
 set guicursor=
+set diffopt=internal,filler,closeoff,iwhite
 
 colorscheme tomorrow-night-eighties
 
@@ -79,6 +83,14 @@ nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader><leader>d :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen=1
 
+augroup typescript
+  au!
+  autocmd BufNewFile,BufRead *.tsx   set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx   set syntax=typescriptreact
+  autocmd BufNewFile,BufRead *.ts   set filetype=typescript
+  autocmd BufNewFile,BufRead *.ts   set syntax=javascript
+augroup END
+
 autocmd FileType typescript nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
 autocmd FileType typescript nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 autocmd FileType typescript.tsx nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
@@ -112,3 +124,6 @@ set hidden
 function! FileOffset()
     return line2byte(line('.')) + col('.') - 1
 endfunction
+
+let g:copilot_filetypes = { 'vim': v:false }
+let b:copilot_enabled=v:false

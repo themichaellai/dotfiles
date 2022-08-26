@@ -8,6 +8,7 @@
   ui = true
 [merge]
   tool = vimdiff
+	conflictStyle = zdiff3
 [log]
   decorate = true
   abbrevCommit = true
@@ -22,6 +23,15 @@
   diff-nl = diff --word-diff-regex=[^[:space:]]
   merge-base-with-curr = "!f() { git merge-base `git rev-parse --abbrev-ref HEAD` \"$@\" | tr -d '\n'; }; f"
   merge-base-main = "!f() { git merge-base `git rev-parse --abbrev-ref HEAD` origin/main | tr -d '\n'; }; f"
+  diff-base-main = "!git diff-fancy `git merge-base-main`"
+  diff-base-origin = "!git diff-fancy origin/`git curr-branch`"
+  review = !/opt/homebrew/bin/nvim -p +\"tabdo Gvdiffsplit $REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$REVIEW_BASE'\"
   s = status -sb
+  # stage-undo <rev to stage file to> <rev with desired local change> <file path>
+  stage-undo = "!f() { git checkout $1 $3 && git show $2:$3 > $3; }; f"
+  # https://stackoverflow.com/questions/43489303/how-can-i-delete-all-git-branches-which-have-been-squash-and-merge-via-github
+  prune-squash-merged = "!f() { git checkout -q main && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base main $branch) && [[ $(git cherry main $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done }; f"
+  prune-squash-merged-dry = "!f() { git checkout -q main && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base main $branch) && [[ $(git cherry main $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]] && echo \"$branch is merged into main and can be deleted\"; done }; f"
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/

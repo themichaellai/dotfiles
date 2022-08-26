@@ -35,7 +35,8 @@ ZSH_THEME="pure"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 alias git='/usr/local/bin/git'
 alias gbst='git for-each-ref --sort=-committerdate refs/ --format='"'"'%(objectname:short) %(committerdate:short) %(authorname) %(refname:short)'"'"''
-plugins=(git rails gem npm rsync bower grunt zsh-syntax-highlighting tmux vagrant sublime)
+# gitfast needed for file autocompletion, git needed for g
+plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -81,11 +82,12 @@ function trim_whitespace {
   sed -i 's/[ \t]*$//' $1
 }
 
-PURE_GIT_PULL=0
+PURE_GIT_PULL=1
+export PURE_GIT_UNTRACKED_DIRTY=0
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-alias date-iso='date +"%Y-%m-%dT%H:%M:%SZ"'
+alias date-iso='date +"%Y-%m-%dT%H:%M:%S"'
 
 alias vim=/usr/local/bin/nvim
 
