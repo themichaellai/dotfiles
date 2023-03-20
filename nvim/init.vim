@@ -3,9 +3,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "    \ 'branch': 'next',
 "    \ 'do': './install.sh',
 "    \ }
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'mattn/emmet-vim'
-Plug 'git@github.com:Quramy/tsuquyomi.git'
 Plug 'git@github.com:Vimjas/vim-python-pep8-indent.git'
 Plug 'git@github.com:airblade/vim-gitgutter.git'
 Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
@@ -23,7 +21,12 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'tpope/vim-fugitive'
 Plug 'github/copilot.vim'
 Plug 'simnalamburt/vim-mundo'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
 
 set nu
 syntax on
@@ -91,15 +94,27 @@ augroup typescript
   autocmd BufNewFile,BufRead *.ts   set syntax=javascript
 augroup END
 
-autocmd FileType typescript nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
-autocmd FileType typescript nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-autocmd FileType typescript.tsx nmap <buffer> <Leader><Leader>q : <C-u>TsuquyomiQuickFix<CR>
-autocmd FileType typescript.tsx nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-autocmd FileType javascript nmap <buffer> <Leader><Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-" autocmd FileType javascript set cino+=(0
+autocmd FileType typescript nmap <buffer> <Leader><Leader>t : call CocAction('doHover')<CR>
+autocmd FileType javascript set cino+=(0
 autocmd FileType typescript set cino+=(0
 let g:tsuquyomi_javascript_support = 1
 autocmd FileType go nmap <Leader><Leader>t <Plug>(go-info)
+
+" coc
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+nmap <leader>rn <Plug>(coc-rename)
+
 
 if (has("termguicolors"))
  set termguicolors
