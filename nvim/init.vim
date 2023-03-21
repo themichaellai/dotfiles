@@ -86,15 +86,8 @@ nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader><leader>d :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen=1
 
-augroup typescript
-  au!
-  autocmd BufNewFile,BufRead *.tsx   set filetype=typescript
-  autocmd BufNewFile,BufRead *.tsx   set syntax=typescriptreact
-  autocmd BufNewFile,BufRead *.ts   set filetype=typescript
-  autocmd BufNewFile,BufRead *.ts   set syntax=javascript
-augroup END
-
 autocmd FileType typescript nmap <buffer> <Leader><Leader>t : call CocAction('doHover')<CR>
+autocmd FileType typescriptreact nmap <buffer> <Leader><Leader>t : call CocAction('doHover')<CR>
 autocmd FileType javascript set cino+=(0
 autocmd FileType typescript set cino+=(0
 let g:tsuquyomi_javascript_support = 1
@@ -114,6 +107,8 @@ function! ShowDocumentation()
   endif
 endfunction
 nmap <leader>rn <Plug>(coc-rename)
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <leader><leader>ac  <Plug>(coc-codeaction)
 
 
 if (has("termguicolors"))
@@ -141,4 +136,4 @@ function! FileOffset()
 endfunction
 
 let g:copilot_filetypes = { 'vim': v:false }
-let b:copilot_enabled=v:false
+let b:copilot_enabled=v:true
