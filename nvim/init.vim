@@ -109,7 +109,7 @@ endfunction
 nmap <leader>rn <Plug>(coc-rename)
 inoremap <silent><expr> <c-space> coc#refresh()
 nmap <leader><leader>ac  <Plug>(coc-codeaction)
-
+hi CocInlayHint guifg=#666666 guibg=NONE ctermfg=246 ctermbg=NONE
 
 if (has("termguicolors"))
  set termguicolors
