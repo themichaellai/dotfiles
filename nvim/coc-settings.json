@@ -4,5 +4,8 @@
   },
   "go.goplsOptions": {
     "gofumpt": false
-  }
+  },
+  "suggest.noselect": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.autoClosingTags": false
 }
