@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import sys
+import os
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: generate-small-movie-name <source-name>")
+        sys.exit(1)
+    source = sys.argv[1]
+    source_root, source_extension = os.path.splitext(source)
+    if source_extension == '.mov':
+        print('{}.mp4'.format(source_root), end='')
+    elif source_extension == '.mp4':
+        print('{} small.mp4'.format(source_root), end='')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+function compress() {
+  new_file=$(generate-small-movie-name "$1")
+  #ffmpeg -i $1 -vcodec h264 -acodec mp2 $new_file
+  ffmpeg -i "$1" -vcodec h264 -acodec mp2 -r 30 "$new_file"
+  echo "compressed to $new_file" >&2
+}
+# exit if there is no source argument
+if [ $# -eq 0 ]; then
+  echo "no source file specified" >&2
+  exit 1
+fi
+compress "$1"
