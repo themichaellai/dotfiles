@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+function print() {
+  echo "$(date +"%Y-%m-%dT%H:%M:%S") $1"
+}
+
+commit="${1:-"$(git rev-parse --abbrev-ref HEAD)"}"
+print "Monitoring $commit..."
+
+while true
+do
+  if [ "$commit" == "" ]
+  then
+    status=$(hub ci-status || true)
+  else
+    status=$(hub ci-status "$commit" || true)
+  fi
+
+  if [ "$status" != "pending" ]
+  then
+    print "$status"
+    osascript -e "display notification \"$commit done: $status\" with title \"monitor-ci\""
+    if [ -n "${SAY_DONE+x}" ]
+    then
+      say 'done'
+    fi
+    tput bel
+    break
+  fi
+  sleep 20
+done

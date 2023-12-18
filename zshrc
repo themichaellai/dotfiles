@@ -33,15 +33,14 @@ ZSH_THEME="pure"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-alias git='/usr/local/bin/git'
+alias git='/opt/homebrew/bin/git'
 alias gbst='git for-each-ref --sort=-committerdate refs/ --format='"'"'%(objectname:short) %(committerdate:short) %(authorname) %(refname:short)'"'"''
 # gitfast needed for file autocompletion, git needed for g
-plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime)
+plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime asdf)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/michael/bin
 setopt append_history no_inc_append_history no_share_history
 HIST_IGNORE_SPACE="true"
 
@@ -72,8 +71,8 @@ alias clipboard='xclip -sel clip'
 alias slack-post='/Users/michael/programming/slack-post/venv/bin/python /Users/michael/programming/slack-post/slack-post.py'
 
 
-export EDITOR=/usr/local/bin/vim
-export VISUAL=/usr/bin/vim
+export EDITOR=/opt/homebrew/bin/nvim
+export VISUAL=/opt/homebrew/bin/nvim
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

@@ -44,6 +44,7 @@ set noincsearch
 set number relativenumber
 set guicursor=
 set diffopt=internal,filler,closeoff,iwhite
+set mouse=
 
 colorscheme tomorrow-night-eighties
 
@@ -92,6 +93,8 @@ autocmd FileType javascript set cino+=(0
 autocmd FileType typescript set cino+=(0
 let g:tsuquyomi_javascript_support = 1
 autocmd FileType go nmap <Leader><Leader>t <Plug>(go-info)
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+
 
 " coc
 nmap <silent> gd <Plug>(coc-definition)
@@ -135,5 +138,5 @@ function! FileOffset()
     return line2byte(line('.')) + col('.') - 1
 endfunction
 
-let g:copilot_filetypes = { 'vim': v:false }
-let b:copilot_enabled=v:true
+" let b:copilot_enabled=v:true
+let g:copilot_filetypes = { 'vim': v:false, 'markdown': v:false }

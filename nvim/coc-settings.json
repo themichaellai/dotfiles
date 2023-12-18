@@ -7,5 +7,6 @@
   },
   "suggest.noselect": true,
   "typescript.suggest.autoImports": true,
-  "typescript.autoClosingTags": false
+  "typescript.autoClosingTags": false,
+  "tsserver.useLocalTsdk": true
 }
