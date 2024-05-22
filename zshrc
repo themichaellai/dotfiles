@@ -90,3 +90,4 @@ alias date-iso='date +"%Y-%m-%dT%H:%M:%S"'
 
 alias vim=/usr/local/bin/nvim
 
+alias greaddstaged="git status --porcelain | grep '^[AM]' | awk '{print \$2}' | xargs git add"
