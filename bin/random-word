@@ -4,7 +4,7 @@ import random
 import sys
 
 def suitable(word):
-    return word.lower() == word
+    return word.lower() == word and len(word) < 6
 
 
 if __name__ == '__main__':

@@ -2,3 +2,4 @@
 *.orig
 venv
 .DS_Store
+.aider*

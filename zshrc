@@ -6,7 +6,7 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="themichaellai"
-ZSH_THEME="pure"
+#ZSH_THEME="pure"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -33,16 +33,19 @@ ZSH_THEME="pure"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-alias git='/opt/homebrew/bin/git'
+alias git="$(brew --prefix)/bin/git"
 alias gbst='git for-each-ref --sort=-committerdate refs/ --format='"'"'%(objectname:short) %(committerdate:short) %(authorname) %(refname:short)'"'"''
 # gitfast needed for file autocompletion, git needed for g
-plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime asdf)
+plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime zsh-syntax-highlighting asdf)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+#export PATH=$PATH:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/michael/bin
 setopt append_history no_inc_append_history no_share_history
 HIST_IGNORE_SPACE="true"
+
+export PATH="/opt/homebrew/bin:$PATH"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -51,9 +54,11 @@ export PATH="/Users/michael/bin:$PATH"
 
 export PATH="/usr/texbin:$PATH"
 
-export PATH="$HOME/opt/android/tools:$HOME/opt/android/platform-tools:$PATH"
+export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 
-export GOPATH="$HOME/bin/go"
+export GOPATH="$HOME/go"
+
+export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 #export NVM_DIR=""
 [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
@@ -88,6 +93,41 @@ export PURE_GIT_UNTRACKED_DIRTY=0
 export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 alias date-iso='date +"%Y-%m-%dT%H:%M:%S"'
 
-alias vim=/usr/local/bin/nvim
+alias vim="$(brew --prefix)/bin/nvim"
 
 alias greaddstaged="git status --porcelain | grep '^[AM]' | awk '{print \$2}' | xargs git add"
+
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+autoload -U promptinit; promptinit
+prompt pure
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
+
+# pnpm
+export PNPM_HOME="/Users/michael/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/michael/code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/michael/code/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/michael/code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/michael/code/google-cloud-sdk/completion.zsh.inc'; fi
+
+# bun completions
+[ -s "/Users/michael/.bun/_bun" ] && source "/Users/michael/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$PATH:/Applications/Racket v8.13/bin"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="/Users/michael/.local/bin:$PATH"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"

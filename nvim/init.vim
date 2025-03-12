@@ -8,7 +8,7 @@ Plug 'git@github.com:Vimjas/vim-python-pep8-indent.git'
 Plug 'git@github.com:airblade/vim-gitgutter.git'
 Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
 Plug 'git@github.com:easymotion/vim-easymotion.git'
-Plug 'git@github.com:fatih/vim-go.git'
+" Plug 'git@github.com:fatih/vim-go.git'
 Plug 'git@github.com:godlygeek/tabular.git'
 Plug 'git@github.com:jeffkreeftmeijer/vim-numbertoggle'
 Plug 'git@github.com:junegunn/vim-plug'
@@ -89,8 +89,7 @@ let NERDTreeQuitOnOpen=1
 
 autocmd FileType typescript nmap <buffer> <Leader><Leader>t : call CocAction('doHover')<CR>
 autocmd FileType typescriptreact nmap <buffer> <Leader><Leader>t : call CocAction('doHover')<CR>
-autocmd FileType javascript set cino+=(0
-autocmd FileType typescript set cino+=(0
+" autocmd FileType typescript set cino+=(0
 let g:tsuquyomi_javascript_support = 1
 autocmd FileType go nmap <Leader><Leader>t <Plug>(go-info)
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
@@ -102,6 +101,21 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call ShowDocumentation()<CR>
+" https://github.com/neoclide/coc.nvim/issues/1405#issuecomment-1477886794
+" function! ShowDocumentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif CocAction('hasProvider', 'hover')
+"     if coc#float#has_float()
+"       call coc#float#jump()
+"       nnoremap <buffer> q <Cmd>close<CR>
+"     else
+"       call CocActionAsync('doHover')
+"     endif
+"   else
+"     call feedkeys('K', 'in')
+"   endif
+" endfunction
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
