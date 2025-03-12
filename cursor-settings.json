@@ -1,0 +1,22 @@
+{
+    "window.commandCenter": 1,
+    "editor.minimap.enabled": true,
+   "editor.autoClosingBrackets": "never",
+    "workbench.preferredLightColorTheme": "Visual Studio Dark",
+    "vim.smartRelativeLine": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+      {
+         "before": ["leader", "leader", "r", "n"],
+         "commands": ["editor.action.rename"]
+      },
+      {
+         "before": ["K"],
+         "commands": ["editor.action.showHover"]
+      },
+      {
+         "before": ["g", "r"],
+         "commands": ["editor.action.referenceSearch.trigger"]
+      }
+   ],
+   "workbench.preferredHighContrastColorTheme": "Cursor Dark High Contrast",
+}
