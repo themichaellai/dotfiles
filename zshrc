@@ -40,6 +40,12 @@ plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime zsh-sy
 
 source $ZSH/oh-my-zsh.sh
 
+# It seems like there's something in the tmux plugin that defines a function
+# called `ts()` -- you can find it by doing `which -a ts` without this. Even
+# though my alias (below) comes first, the expanded command from the alias
+# resolves to the tmux `ts` rather than the `ts` program.
+unset -f ts
+
 # Customize to your needs...
 #export PATH=$PATH:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/michael/bin
 setopt append_history no_inc_append_history no_share_history

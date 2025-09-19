@@ -8,5 +8,14 @@
   "suggest.noselect": true,
   "typescript.suggest.autoImports": true,
   "typescript.autoClosingTags": false,
-  "tsserver.useLocalTsdk": true
+  "tsserver.useLocalTsdk": true,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.indexing": true,
+  "python.analysis.packageIndexDepths": [
+    {
+      "name": "",
+      "depth": 10
+    }
+  ],
+  "inlayHint.enable": false
 }

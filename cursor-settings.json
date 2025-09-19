@@ -1,22 +1,46 @@
 {
-    "window.commandCenter": 1,
-    "editor.minimap.enabled": true,
-   "editor.autoClosingBrackets": "never",
-    "workbench.preferredLightColorTheme": "Visual Studio Dark",
-    "vim.smartRelativeLine": true,
-    "vim.normalModeKeyBindingsNonRecursive": [
-      {
-         "before": ["leader", "leader", "r", "n"],
-         "commands": ["editor.action.rename"]
-      },
-      {
-         "before": ["K"],
-         "commands": ["editor.action.showHover"]
-      },
-      {
-         "before": ["g", "r"],
-         "commands": ["editor.action.referenceSearch.trigger"]
-      }
-   ],
-   "workbench.preferredHighContrastColorTheme": "Cursor Dark High Contrast",
+  "window.commandCenter": 1,
+  "editor.autoClosingBrackets": "never",
+  "workbench.preferredLightColorTheme": "Visual Studio Dark",
+  "vim.smartRelativeLine": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["leader", "leader", "r", "n"],
+      "commands": ["editor.action.rename"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showHover"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.referenceSearch.trigger"]
+    },
+    {
+      "before": ["g", "y"],
+      "commands": ["editor.action.goToTypeDefinition"]
+    }
+  ],
+  "workbench.preferredHighContrastColorTheme": "Cursor Dark High Contrast",
+  "redhat.telemetry.enabled": false,
+  "editor.rulers": [80],
+  "cursor-retrieval.canAttemptGithubLogin": false,
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.wrappingIndent": "none",
+  "editor.wordWrap": "on",
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "mypy-type-checker.preferDaemon": true,
+  "cursorpyright.analysis.diagnosticMode": "workspace",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "python.languageServer": "None",
+  "editor.fontSize": 11,
+  "workbench.colorTheme": "Visual Studio Dark"
 }

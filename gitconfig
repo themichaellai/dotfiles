@@ -34,6 +34,7 @@
   # https://stackoverflow.com/questions/43489303/how-can-i-delete-all-git-branches-which-have-been-squash-and-merge-via-github
   prune-squash-merged = "!f() { git checkout -q main && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base main $branch) && [[ $(git cherry main $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done }; f"
   prune-squash-merged-dry = "!f() { git checkout -q main && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base main $branch) && [[ $(git cherry main $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]] && echo \"$branch is merged into main and can be deleted\"; done }; f"
+  unmerged-names = "diff --name-only --diff-filter=U"
 
 [url "git@github.com:"]
 	insteadOf = https://github.com/
