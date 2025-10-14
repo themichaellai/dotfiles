@@ -5,9 +5,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 "    \ }
 Plug 'mattn/emmet-vim'
 Plug 'git@github.com:Vimjas/vim-python-pep8-indent.git'
-Plug 'git@github.com:airblade/vim-gitgutter.git'
-Plug 'git@github.com:ctrlpvim/ctrlp.vim.git'
-Plug 'git@github.com:easymotion/vim-easymotion.git'
+Plug 'git@github.com:airblade/vim-gitgutter.git', { 'commit': '488c055' }
+Plug 'git@github.com:ctrlpvim/ctrlp.vim.git', { 'commit': '475a864' }
+Plug 'git@github.com:easymotion/vim-easymotion.git', { 'commit': 'b3cfab2' }
 " Plug 'git@github.com:fatih/vim-go.git'
 Plug 'git@github.com:godlygeek/tabular.git'
 Plug 'git@github.com:jeffkreeftmeijer/vim-numbertoggle'
@@ -16,16 +16,18 @@ Plug 'git@github.com:leafgarland/typescript-vim.git'
 Plug 'git@github.com:mikewest/vimroom.git'
 Plug 'git@github.com:pangloss/vim-javascript.git'
 Plug 'git@github.com:scrooloose/nerdtree.git'
-Plug 'reasonml-editor/vim-reason-plus'
-Plug 'elixir-editors/vim-elixir'
-Plug 'tpope/vim-fugitive'
+" Plug 'reasonml-editor/vim-reason-plus'
+" Plug 'elixir-editors/vim-elixir'
+Plug 'tpope/vim-fugitive', { 'commit': '61b51c0' }
 Plug 'github/copilot.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 let g:coc_global_extensions = [
-  \ 'coc-tsserver'
+  \ 'coc-tsserver',
+  \ '@yaegassy/coc-tailwindcss3',
+  \ 'coc-pyright',
   \ ]
 
 set nu
@@ -45,6 +47,9 @@ set number relativenumber
 set guicursor=
 set diffopt=internal,filler,closeoff,iwhite
 set mouse=
+set textwidth=0
+set wrapmargin=0
+set formatoptions-=t
 
 colorscheme tomorrow-night-eighties
 
