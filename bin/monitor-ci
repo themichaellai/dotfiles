@@ -2,13 +2,48 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+function usage() {
+  cat <<EOF
+Usage: $(basename "$0") [OPTIONS] [COMMIT]
+
+Monitor CI status for a git commit and notify when complete.
+
+Arguments:
+  COMMIT    Git commit, branch, or ref to monitor (default: current branch)
+
+Options:
+  -h, --help    Show this help message and exit
+
+Environment variables:
+  SAY_DONE      If set, speaks "done" when CI completes
+
+Examples:
+  $(basename "$0")              # Monitor current branch
+  $(basename "$0") main         # Monitor the main branch
+  $(basename "$0") abc123       # Monitor a specific commit
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
 function print() {
   echo "$(date +"%Y-%m-%dT%H:%M:%S") $1"
 }
 
 commit="${1:-"$(git rev-parse --abbrev-ref HEAD)"}"
-print "Monitoring $commit..."
 
+# If a branch arg was given, verify it exists on GitHub
+if [[ -n "${1:-}" ]]; then
+  if ! gh api "repos/{owner}/{repo}/branches/$commit" >/dev/null 2>&1; then
+    echo "error: branch '$commit' does not exist on GitHub. Use the branch." >&2
+    exit 1
+  fi
+fi
+
+print "Monitoring $commit..."
 while true
 do
   if [ "$commit" == "" ]
@@ -17,7 +52,6 @@ do
   else
     status=$(hub ci-status "$commit" || true)
   fi
-
   if [ "$status" != "pending" ]
   then
     print "$status"
