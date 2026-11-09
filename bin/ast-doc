@@ -1,0 +1,41 @@
+#!/bin/sh
+# ast-doc [file or dir ...]
+#
+# Go-doc style listing of a TypeScript module's exports: each export with the
+# comment written directly above it, plus its signature up to the first open
+# bracket. Works on files and directories (.ts and .tsx). Needs ast-grep and jq.
+
+set -eu
+
+if [ $# -eq 0 ]; then
+  echo "usage: ast-doc <file or dir>..." >&2
+  exit 2
+fi
+
+rules=''
+for lang in typescript tsx; do
+  rules="$rules
+id: doc-$lang
+language: $lang
+rule: {kind: export_statement, follows: {kind: comment, pattern: \$DOC}}
+---
+id: nodoc-$lang
+language: $lang
+rule: {kind: export_statement, not: {follows: {kind: comment}}}
+"
+  [ "$lang" = typescript ] && rules="$rules---"
+done
+
+ast-grep scan --inline-rules "$rules" --json=compact "$@" \
+| jq -r '
+  group_by(.file)[]
+  | "== " + .[0].file,
+    ( sort_by(.range.start.line)[]
+      | (.metaVariables.single.DOC.text // empty),
+        ( .text
+          | split("\n")
+          | (map(test("[{(\\[;]\\s*$")) | index(true) // 0) as $i
+          | .[:$i+1]
+          | join("\n") ),
+        "" )
+'

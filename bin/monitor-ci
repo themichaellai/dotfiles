@@ -12,22 +12,28 @@ Arguments:
   COMMIT    Git commit, branch, or ref to monitor (default: current branch)
 
 Options:
-  -h, --help    Show this help message and exit
+  -h, --help        Show this help message and exit
+  -a, --all         Wait for all checks, not just required ones
 
 Environment variables:
   SAY_DONE      If set, speaks "done" when CI completes
 
 Examples:
   $(basename "$0")              # Monitor current branch
-  $(basename "$0") main         # Monitor the main branch
-  $(basename "$0") abc123       # Monitor a specific commit
+  $(basename "$0") main         # Monitor required checks on main
+  $(basename "$0") -a           # Monitor all checks (including optional)
+  $(basename "$0") -a main      # Monitor all checks on main
 EOF
 }
 
-if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  usage
-  exit 0
-fi
+all=false
+while [[ "${1:-}" == -* ]]; do
+  case "${1:-}" in
+    -h|--help) usage; exit 0 ;;
+    -a|--all) all=true; shift ;;
+    *) echo "Unknown option: $1" >&2; usage; exit 1 ;;
+  esac
+done
 
 function print() {
   echo "$(date +"%Y-%m-%dT%H:%M:%S") $1"
@@ -43,25 +49,35 @@ if [[ -n "${1:-}" ]]; then
   fi
 fi
 
-print "Monitoring $commit..."
-while true
-do
-  if [ "$commit" == "" ]
-  then
-    status=$(hub ci-status || true)
-  else
-    status=$(hub ci-status "$commit" || true)
+function notify() {
+  local status="$1"
+  print "$status"
+  osascript -e "display notification \"$commit done: $status\" with title \"monitor-ci\""
+  if [ -n "${SAY_DONE+x}" ]; then
+    say 'done'
   fi
-  if [ "$status" != "pending" ]
-  then
-    print "$status"
-    osascript -e "display notification \"$commit done: $status\" with title \"monitor-ci\""
-    if [ -n "${SAY_DONE+x}" ]
+  tput bel
+}
+
+if $all; then
+  print "Monitoring $commit (all checks)..."
+  while true
+  do
+    if [ "$commit" == "" ]
     then
-      say 'done'
+      status=$(hub ci-status || true)
+    else
+      status=$(hub ci-status "$commit" || true)
     fi
-    tput bel
-    break
-  fi
-  sleep 20
-done
+    if [ "$status" != "pending" ]
+    then
+      notify "$status"
+      break
+    fi
+    sleep 20
+  done
+else
+  print "Monitoring $commit (required checks only)..."
+  gh pr checks "$commit" --required --watch --fail-fast --interval 20 && status="success" || status="failure"
+  notify "$status"
+fi

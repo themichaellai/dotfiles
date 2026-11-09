@@ -2,6 +2,38 @@
 rex.mode("leader")
 rex.bind("ctrl+a", "client.mode.enter", { name = "leader", once = true })
 
+-- Send ctrl+a to the program in the pane: leader ctrl+a (the tmux send-prefix).
+-- \1 is the byte that ctrl+a types.
+rex.action{
+  name  = "send_leader",
+  title = "Send Leader Key",
+  run   = function(ctx)
+    rex.block.call("com.superlogical.terminal", "write", { block_id = ctx.block_id, data = "\1" })
+  end,
+}
+rex.bind("leader/ctrl+a", "send_leader")
+
+-- ctrl+[ types Escape. A program that turns on the kitty keyboard protocol,
+-- such as Claude Code, gets ctrl+[ as its own key, not as Escape. This
+-- binding sends a real Escape key press, so every program sees Escape.
+rex.action{
+  name  = "send_escape",
+  title = "Send Escape",
+  run   = function(ctx)
+    for _, action in ipairs({ "press", "release" }) do
+      rex.call("block.event", {
+        session_id = ctx.session_id,
+        block_id   = ctx.block_id,
+        event = { type = "key", payload = {
+          key = "escape", mods = "", consumed_mods = "", text = "",
+          unshifted_codepoint = 0, composing = false, action = action,
+        } },
+      })
+    end
+  end,
+}
+rex.bind("ctrl+[", "send_escape")
+
 -- Splits: leader | puts the new pane on the right, leader - puts it below.
 rex.bind("leader/shift+\\", "pane.split.right")
 rex.bind("leader/-", "pane.split.down")
