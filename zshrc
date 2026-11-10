@@ -36,7 +36,7 @@ ZSH=$HOME/.oh-my-zsh
 alias git="$(brew --prefix)/bin/git"
 alias gbst='git for-each-ref --sort=-committerdate refs/ --format='"'"'%(objectname:short) %(committerdate:short) %(authorname) %(refname:short)'"'"''
 # gitfast needed for file autocompletion, git needed for g
-plugins=(git gitfast rails gem npm rsync bower grunt tmux vagrant sublime zsh-syntax-highlighting asdf)
+plugins=(git gitfast gem npm rsync tmux sublime asdf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,6 +50,8 @@ unset -f ts
 #export PATH=$PATH:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/michael/bin
 setopt append_history no_inc_append_history no_share_history
 HIST_IGNORE_SPACE="true"
+HISTSIZE=100000
+SAVEHIST=100000
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -87,16 +89,48 @@ export VISUAL=/opt/homebrew/bin/nvim
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
+# Ghostty sends ctrl+[ as the sequence ESC [ 91 ; 5 u, not as a plain escape
+# byte. Without these lines, vi mode reads the final "u" as undo and drops
+# what you just typed. Treat the sequence as Escape.
+bindkey -M viins '^[[91;5u' vi-cmd-mode
+bindkey -M vicmd '^[[91;5u' vi-cmd-mode
+# In a ctrl-r search, vi-cmd-mode only changes the search to command mode, and
+# the search stays open until the next key. A widget that zsh does not know
+# closes the search first, then runs. This widget closes the search and goes
+# to vi command mode.
+end-search-vi-cmd-mode() { zle vi-cmd-mode }
+zle -N end-search-vi-cmd-mode
+bindkey -M isearch '^[' end-search-vi-cmd-mode
+bindkey -M isearch '^[[91;5u' end-search-vi-cmd-mode
+# Wait 10 ms, not 400 ms, for more keys after ESC.
+KEYTIMEOUT=1
 
 function trim_whitespace {
   sed -i 's/[ \t]*$//' $1
 }
 
+# hub is uninstalled. Keep `hub browse` working through gh, and open the
+# current branch like hub did. Other hub commands only print an error.
+hub() {
+  if [[ $1 != browse ]]; then
+    echo "hub is uninstalled; use gh" >&2
+    return 1
+  fi
+  shift
+  local branch=$(git branch --show-current 2>/dev/null)
+  # An issue or PR number cannot be combined with --branch.
+  if [[ -n $branch ]] && (( ! ${@[(I)<->]} )); then
+    gh browse --branch "$branch" "$@"
+  else
+    gh browse "$@"
+  fi
+}
+
 PURE_GIT_PULL=1
 export PURE_GIT_UNTRACKED_DIRTY=0
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+#export PATH=$GEM_HOME/bin:$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 alias date-iso='date +"%Y-%m-%dT%H:%M:%S"'
 
 alias vim="$(brew --prefix)/bin/nvim"
